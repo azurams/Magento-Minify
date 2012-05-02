@@ -1,3 +1,4 @@
+![Magento js file minified](http://i.imgur.com/w9NdG.png)
 ## Introduction
 
 WBL_Minify extension enables minification of magento css merged files and/or  javascript merged files.  
