@@ -1,7 +1,7 @@
 ## Introduction
 
-WBL_Minify extension enables minification of magento css merged files and/or  javascript merged files.
-You can choose to use YUICompressor (included). In that case, be sure to have Java installed on your server and MAGE_ROOT_DIR/lib/YUICompressor.(-version-).jar executable.
+WBL_Minify extension enables minification of magento css merged files and/or  javascript merged files.  
+You can choose to use YUICompressor (included). In that case, be sure to have Java installed on your server and MAGE_ROOT_DIR/lib/YUICompressor.(-version-).jar executable.  
 Or you may prefer PHP Minifying classes (included).
 
 PHP minifying libraries (Minify_CSS_Compressor , JSMin) are taken from Stephen Clay's Minify project - http://code.google.com/p/minify/  
@@ -16,7 +16,7 @@ PHP minifying libraries (Minify_CSS_Compressor , JSMin) are taken from Stephen C
 
 ## Behaviour
 
-This extension simply minifies css and javascript merged content before saving it the each corresponding file.
+This extension simply minifies css and javascript content before merged files are saved as in the normal magento behaviour.  
 No cache proxy server, or anything complicated : the simple genuine js and css magento browser cache behaviour, but with minified files ;)
 
 ## Installation
