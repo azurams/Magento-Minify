@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WBL_Minify>
+            <active>true</active>
+            <codePool>community</codePool>
+        </WBL_Minify>
+    </modules>
+</config>

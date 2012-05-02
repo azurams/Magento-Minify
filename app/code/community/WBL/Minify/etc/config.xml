@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <WBL_Minify>
+            <version>0.1.0</version>
+        </WBL_Minify>
+    </modules>
+    <global>
+        <helpers>
+            <wbl_minify>
+                <class>WBL_Minify_Helper</class>
+            </wbl_minify>
+            <core>
+                <rewrite>
+                    <data>WBL_Minify_Helper_Core_Data</data>
+                </rewrite>
+            </core>
+        </helpers>
+    </global>
+</config>
