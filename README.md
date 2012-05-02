@@ -4,6 +4,8 @@ WBL_Minify extension enables minification of magento css merged files and/or  ja
 You can choose to use YUICompressor (included). In that case, be sure to have Java installed on your server and MAGE_ROOT_DIR/lib/YUICompressor.(-version-).jar executable.
 Or you may prefer PHP Minifying classes (included).
 
+PHP minifying libraries (Minify_CSS_Compressor , JSMin) are taken from Stephen Clay's Minify project - http://code.google.com/p/minify/  
+
 ## Facts
 
 |   Total Size 	  | frontend js  | frontend css | backend js   |  backend css |
