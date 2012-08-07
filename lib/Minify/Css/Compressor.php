@@ -1,6 +1,6 @@
 <?php
 /**
- * Class Minify_CSS_Compressor 
+ * Class Minify_Css_Compressor 
  * @package Minify
  */
 
@@ -18,7 +18,7 @@
  * @author Stephen Clay <steve@mrclay.org>
  * @author http://code.google.com/u/1stvamp/ (Issue 64 patch)
  */
-class Minify_CSS_Compressor {
+class Minify_Css_Compressor {
 
     /**
      * Minify a CSS string
@@ -31,7 +31,7 @@ class Minify_CSS_Compressor {
      */
     public static function process($css, $options = array())
     {
-        $obj = new Minify_CSS_Compressor($options);
+        $obj = new Minify_Css_Compressor($options);
         return $obj->_process($css);
     }
     
