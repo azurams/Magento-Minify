@@ -63,7 +63,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         }
 
                         if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
-                            $data = Minify_CSS_Compressor::process($data);
+                            $data = Minify_Css_Compressor::process($data);
                         }
                     }
                 break;
