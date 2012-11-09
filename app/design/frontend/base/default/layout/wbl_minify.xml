@@ -25,7 +25,7 @@
 <layout>
     <default>
         <reference name="head">
-            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/less.js</script></action>
+            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/init.js</script></action>
         </reference>
     </default>
 </layout>
