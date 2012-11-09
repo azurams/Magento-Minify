@@ -6,6 +6,8 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
     const XML_PATH_MINIFY_CSS_FILES             = 'dev/minify/css_files';
     const XML_PATH_MINIFY_JS_FILES              = 'dev/minify/js_files';
 
+    protected $_lessphp = null;
+
 
     public function isYUICompressEnabled()
     {
@@ -75,6 +77,36 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
         return $data;
     }
 
+    public function preProcess($data, $file)
+    {
+        if ($this->canMinifyCss() || $this->canMinifyJs()) {
+            switch (pathinfo($file, PATHINFO_EXTENSION))
+            {
+                case 'less':
+                    $data =  $this->_getLessphpModel()->compileFile($file);
+                break;
+
+                default:
+                    return $data;
+            }
+        }
+        return $data;
+    }
+
+
+    /**
+     * @return lessc
+     */
+    protected function _getLessphpModel()
+    {
+        if ($this->_lessphp === null)
+        {
+            require_once Mage::getBaseDir('lib').DS.'lessphp'.DS.'lessc.inc.php';
+            $this->_lessphp = new lessc();
+        }
+        return $this->_lessphp;
+    }
+
     /**
      * 
      * Merge specified files into one
@@ -124,6 +156,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
 
                 // filter by extensions
                 if ($extensionsFilter) {
+                    if ($extensionsFilter == 'css')
+                    {
+                        $extensionsFilter = array('css','less');
+                    }
                     if (!is_array($extensionsFilter)) {
                         $extensionsFilter = array($extensionsFilter);
                     }
@@ -147,6 +183,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         continue;
                     }
                     $contents = file_get_contents($file) . "\n";
+                    $contents = $this->preProcess($contents, $file);
                     if ($beforeMergeCallback && is_callable($beforeMergeCallback)) {
                         $contents = call_user_func($beforeMergeCallback, $file, $contents);
                     }

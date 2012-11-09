@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * WBL_Minify
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the H&O Commercial License
+ * that is bundled with this package in the file LICENSE_HO.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.h-o.nl/license
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to info@h-o.com so we can send you a copy immediately.
+ *
+ * @category    WBL
+ * @package     WBL_Minify
+ * @copyright   Copyright © 2012 H&O (http://www.h-o.nl/)
+ * @license     H&O Commercial License (http://www.h-o.nl/license)
+ * @author      Paul Hachmang – H&O <info@h-o.nl>
+ *
+ * 
+ */
+-->
+
+<config>
+	<modules>
+		<WBL_Minify>
+			<version>0.1.0</version>
+		</WBL_Minify>
+	</modules>
+	<global>
+		<blocks>
+			<wbl_minify>
+				<class>WBL_Minify_Block</class>
+			</wbl_minify>
+		</blocks>
+		<helpers>
+			<wbl_minify>
+				<class>WBL_Minify_Helper</class>
+			</wbl_minify>
+		</helpers>
+		<models>
+			<wbl_minify>
+				<class>WBL_Minify_Model</class>
+                <resourceModel>wbl_minify_resource</resourceModel>
+			</wbl_minify>
+            <wbl_minify_resource>
+                <class>WBL_Minify_Model_Resource</class>
+                <!--<entities>-->
+                    <!--<tablename>-->
+                        <!--<table>wbl_minify_tablename</table>-->
+                    <!--</tablename>-->
+                <!--</entities>-->
+            </wbl_minify_resource>
+		</models>
+        <resources>
+            <wbl_minify_setup>
+                <setup>
+                    <module>WBL_Minify</module>
+                    <class>WBL_Minify_Model_Resource_Setup</class>
+                </setup>
+            </wbl_minify_setup>
+        </resources>
+
+		<!--<events>-->
+			<!--<http_response_send_before>-->
+				<!--<observers>-->
+					<!--<wbl_minify_head_observer>-->
+						<!--<type>singleton</type>-->
+						<!--<class>WBL_Minify_Model_Observer</class>-->
+						<!--<metwbld>check</metwbld>-->
+					<!--</wbl_minify_head_observer>-->
+				<!--</observers>-->
+			<!--</http_response_send_before>-->
+		<!--</events>-->
+	</global>
+	<frontend>
+		<!--<routers>-->
+			<!--<wbl_minify>-->
+				<!--<use>standard</use>-->
+				<!--<args>-->
+					<!--<module>WBL_Minify</module>-->
+					<!--<frontName>wbl_minify</frontName>-->
+				<!--</args>-->
+			<!--</wbl_minify>-->
+		<!--</routers>-->
+		<!--<layout>-->
+			<!--<updates>-->
+				<!--<wbl_minify module="wbl_minify">-->
+					<!--<file>wbl_minify.xml</file>-->
+				<!--</wbl_minify>-->
+			<!--</updates>-->
+		<!--</layout>-->
+        <!--<translate>-->
+            <!--<modules>-->
+                <!--<wbl_minify>-->
+                    <!--<files>-->
+                        <!--<default>WBL_Minify.csv</default>-->
+                    <!--</files>-->
+                <!--</wbl_minify>-->
+            <!--</modules>-->
+        <!--</translate>-->
+	</frontend>
+    <adminhtml>
+        <!--<translate>-->
+            <!--<modules>-->
+                <!--<wbl_minify>-->
+                    <!--<files>-->
+                        <!--<default>WBL_Minify.csv</default>-->
+                    <!--</files>-->
+                <!--</wbl_minify>-->
+            <!--</modules>-->
+        <!--</translate>-->
+    </adminhtml>
+    <admin>
+        <!--<routers>-->
+            <!--<adminhtml>-->
+                <!--<args>-->
+                    <!--<modules>-->
+                        <!--<WBL_Minify before="Mage_Adminhtml">WBL_Minify_Adminhtml</WBL_Minify>-->
+                    <!--</modules>-->
+                <!--</args>-->
+            <!--</adminhtml>-->
+        <!--</routers>-->
+    </admin>
+	<default>
+		<!--<wbl_minify>-->
+			<!--<group>-->
+				<!--<variable>somevar</variable>-->
+			<!--</group>-->
+		<!--</wbl_minify>-->
+	</default>
+	<!--<crontab>-->
+		<!--<jobs>-->
+			<!--<wbl_minify>-->
+				<!--<schedule>-->
+					<!--<cron_expr>* * * * *</cron_expr>-->
+				<!--</schedule>-->
+				<!--<run>-->
+					<!--<model>wbl_minify/observer::</model>-->
+				<!--</run>-->
+			<!--</wbl_minify>-->
+		<!--</jobs>-->
+	<!--</crontab>-->
+</config>
