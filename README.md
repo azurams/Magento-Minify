@@ -24,9 +24,11 @@ No cache proxy server, or anything complicated : the simple genuine js and css m
 
 Install with [modgit](https://github.com/jreinke/modgit):
 
-    $ cd /path/to/magento
-    $ modgit init
-    $ modgit -e README.md clone magento-minify git://github.com/azurams/Magento-Minify.git
+```bash
+$ cd /path/to/magento
+$ modgit init
+$ modgit -e README.md clone magento-minify git://github.com/azurams/Magento-Minify.git
+```
 
 or download package manually:
 
@@ -37,3 +39,18 @@ or download package manually:
 Log-out then Log-in in magento backend, go to System > Configuration > Developer > Minification Settings.
 Then flush media/js and media/css files... and that's it !
 
+## Using Less
+
+The module allows the compilation of .less files and adds the less.js if merging is disabled.
+
+Adding a .less file to your scripts is easy:
+
+```xml
+<layout>
+    <default>
+        <reference name="head">
+            <action method="addItem"><type>skin_css</type><stylesheet>less/responsive.less</stylesheet></action>
+        </reference>
+    </default>
+</layout>
+```
