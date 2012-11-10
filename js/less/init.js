@@ -15,7 +15,7 @@
 
     if (init)
     {
-//        less.env = "development";
+        less.watch();
         less.refresh();
     }
 })();
