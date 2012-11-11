@@ -1,0 +1,4 @@
+app/code/community/WBL/Minify/* app/code/community/WBL/Minify/
+app/etc/modules/* app/etc/modules/
+lib/* lib/
+bin/* bin/
