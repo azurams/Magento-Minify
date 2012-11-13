@@ -1,5 +1,7 @@
 (function() {
-//    less.watch();
+
+    // Destroys the localStorage copy of CSS that less.js creates
+    localStorage.clear();
 
     var cssEls = document.getElementsByTagName('link');
     var init = false;
