@@ -17,4 +17,13 @@
             </core>
         </helpers>
     </global>
+    <frontend>
+        <layout>
+            <updates>
+                <wbl_minify module="wbl_minify">
+                    <file>wbl_minify.xml</file>
+                </wbl_minify>
+            </updates>
+        </layout>
+    </frontend>
 </config>

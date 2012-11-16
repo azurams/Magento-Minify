@@ -6,22 +6,42 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
     const XML_PATH_MINIFY_CSS_FILES             = 'dev/minify/css_files';
     const XML_PATH_MINIFY_JS_FILES              = 'dev/minify/js_files';
 
+    protected $_lessphp = null;
 
+
+    /**
+     * @return bool
+     */
     public function isYUICompressEnabled()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_MINIFY_ENABLE_YUICOMPRESSOR);
     }
 
+
+    /**
+     * @return bool
+     */
     public function canMinifyJs()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_MINIFY_JS_FILES);
     }
 
+
+    /**
+     * @return bool
+     */
     public function canMinifyCss()
     {
         return Mage::getStoreConfigFlag(self::XML_PATH_MINIFY_CSS_FILES);
     }
 
+
+    /**
+     * @param string $data
+     * @param string $target
+     *
+     * @return string
+     */
     public function minifyJsCss($data,$target)
     {
         if ($this->canMinifyCss() || $this->canMinifyJs()) {
@@ -75,8 +95,51 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
         return $data;
     }
 
+
     /**
-     * 
+     * PreCompile the files (less files for example) to CSS so the default
+     * minifier can handle the files. The file paths aren't expanded yet.
+     *
+     * @param string $data
+     * @param string $file
+     *
+     * @return string
+     */
+    public function preProcess($data, $file)
+    {
+        if ($this->canMinifyCss() || $this->canMinifyJs()) {
+            switch (pathinfo($file, PATHINFO_EXTENSION))
+            {
+                case 'less':
+                    return $this->_getLessphpModel()->compileFile($file);
+                break;
+
+                default:
+                    return $data;
+            }
+        }
+        return $data;
+    }
+
+
+    /**
+     * Get the less compiler
+     *
+     * @return lessc
+     */
+    protected function _getLessphpModel()
+    {
+        if ($this->_lessphp === null)
+        {
+            require_once Mage::getBaseDir('lib').DS.'lessphp'.DS.'lessc.inc.php';
+            $this->_lessphp = new lessc();
+        }
+        return $this->_lessphp;
+    }
+
+
+    /**
+     *
      * Merge specified files into one
      *
      * By default will not merge, if there is already merged file exists and it
@@ -88,11 +151,13 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
      * May filter files by specified extension(s)
      * Returns false on error
      *
-     * @param array $srcFiles
-     * @param string|false $targetFile - file path to be written
-     * @param bool $mustMerge
-     * @param callback $beforeMergeCallback
+     * @param array        $srcFiles
+     * @param string|bool  $targetFile - file path to be written
+     * @param bool         $mustMerge
+     * @param callback     $beforeMergeCallback
      * @param array|string $extensionsFilter
+     *
+     * @throws Exception
      * @return bool|string
      */
     public function mergeFiles(array $srcFiles, $targetFile = false, $mustMerge = false,
@@ -124,6 +189,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
 
                 // filter by extensions
                 if ($extensionsFilter) {
+                    if ($extensionsFilter == 'css')
+                    {
+                        $extensionsFilter = array('css','less');
+                    }
                     if (!is_array($extensionsFilter)) {
                         $extensionsFilter = array($extensionsFilter);
                     }
@@ -147,6 +216,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         continue;
                     }
                     $contents = file_get_contents($file) . "\n";
+                    $contents = $this->preProcess($contents, $file);
                     if ($beforeMergeCallback && is_callable($beforeMergeCallback)) {
                         $contents = call_user_func($beforeMergeCallback, $file, $contents);
                     }
