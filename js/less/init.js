@@ -6,11 +6,10 @@
     var cssEls = document.getElementsByTagName('link');
     var init = false;
 
-    for (var i in cssEls)
-    {
-        if (cssEls[i].href && cssEls[i].href.substr(-5) == '.less')
-        {
+    for (var i in cssEls) {
+        if (cssEls[i].href && cssEls[i].href.substr(-5) == '.less') {
             init = true;
+            less.dumpLineNumbers = "all";
             less.sheets.push(cssEls[i]);
         }
     }
