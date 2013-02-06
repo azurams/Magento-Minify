@@ -56,7 +56,9 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     if ($this->canMinifyJs()) {
                         if ($this->isYUICompressEnabled()) {
                             try {
+                                Varien_Profiler::start('Minify_YUICompressor::minifyJs');
                                 $data = Minify_YUICompressor::minifyJs($data);
+                                Varien_Profiler::stop('Minify_YUICompressor::minifyJs');
                                 $YUICompressorFailed = false;
                             } catch(Exception $e) {
                                 Mage::logException($e);
@@ -65,7 +67,9 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         }
 
                         if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                            Varien_Profiler::start('Minify_JSMin::minify');
                             $data = Minify_JSMin::minify($data);
+                            Varien_Profiler::stop('Minify_JSMin::minify');
                         }
                     }
                 break;
@@ -74,7 +78,9 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     if ($this->canMinifyCss()) {
                         if ($this->isYUICompressEnabled()) {
                             try {
+                                Varien_Profiler::start('Minify_YUICompressor::minifyCss');
                                 $data = Minify_YUICompressor::minifyCss($data);
+                                Varien_Profiler::stop('Minify_YUICompressor::minifyCss');
                                 $YUICompressorFailed = false;
                             } catch(Exception $e) {
                                 Mage::logException($e);
@@ -83,7 +89,9 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         }
 
                         if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                            Varien_Profiler::start('Minify_Css_Compressor::process');
                             $data = Minify_Css_Compressor::process($data);
+                            Varien_Profiler::stop('Minify_Css_Compressor::process');
                         }
                     }
                 break;
@@ -111,7 +119,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
             switch (pathinfo($file, PATHINFO_EXTENSION))
             {
                 case 'less':
-                    return $this->_getLessphpModel()->compileFile($file);
+                    Varien_Profiler::start('lessc::compileFile');
+                    $data = $this->_getLessphpModel()->compileFile($file);
+                    Varien_Profiler::stop('lessc::compileFile');
+                    return $data;
                 break;
 
                 default:

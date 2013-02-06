@@ -1,6 +1,6 @@
-app/code/community/WBL/Minify/* app/code/community/WBL/Minify/
+app/code/community/WBL/*                  app/code/community/WBL/
+app/etc/modules/*                         app/etc/modules/
 app/design/frontend/base/default/layout/* app/design/frontend/base/default/layout/
-app/etc/modules/* app/etc/modules/
-lib/* lib/
-bin/* bin/
-js/less js/less
+lib/*                                     lib/
+bin/*                                     bin/
+js/*                                      js/
