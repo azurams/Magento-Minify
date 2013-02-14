@@ -16,6 +16,7 @@
                 </rewrite>
             </core>
         </helpers>
+        <blocks></blocks>
     </global>
     <frontend>
         <layout>
