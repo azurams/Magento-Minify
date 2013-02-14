@@ -16,6 +16,13 @@
                 </rewrite>
             </core>
         </helpers>
+        <blocks>
+            <page>
+                <rewrite>
+                    <html_head>WBL_Minify_Block_Page_Html_Head</html_head>
+                </rewrite>
+            </page>
+        </blocks>
     </global>
     <frontend>
         <layout>
