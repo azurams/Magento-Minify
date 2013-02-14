@@ -124,8 +124,8 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
             'params' => $params,
             'if'     => (string) $if,
             'cond'   => (string) $cond,
-            'group'  => $group
-       );
+            'group'  => (string) $group
+        );
         return $this;
     }
 
