@@ -43,7 +43,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      * @param string $group
      * @return Mage_Page_Block_Html_Head
      */
-    public function addCss($name, $params = "", $group='default')
+    public function addCss($name, $params = "", $group='nogroup')
     {
         $this->addItem('skin_css', $name, $params, null, null, $group);
         return $this;
@@ -58,7 +58,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      * @param string $group
      * @return Mage_Page_Block_Html_Head
      */
-    public function addJs($name, $params = "", $group='default')
+    public function addJs($name, $params = "", $group='nogroup')
     {
         $this->addItem('js', $name, $params, null, null, $group);
         return $this;
@@ -73,7 +73,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      * @param string $group
      * @return Mage_Page_Block_Html_Head
      */
-    public function addCssIe($name, $params = "", $group='default')
+    public function addCssIe($name, $params = "", $group='nogroup')
     {
         $this->addItem('skin_css', $name, $params, 'IE', null, $group);
         return $this;
@@ -88,7 +88,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      * @param string $group
      * @return Mage_Page_Block_Html_Head
      */
-    public function addJsIe($name, $params = "", $group='default')
+    public function addJsIe($name, $params = "", $group='nogroup')
     {
         $this->addItem('js', $name, $params, 'IE', null, $group);
         return $this;
@@ -113,7 +113,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      * @param string $group
      * @return Mage_Page_Block_Html_Head
      */
-    public function addItem($type, $name, $params=null, $if=null, $cond=null, $group='default')
+    public function addItem($type, $name, $params=null, $if=null, $cond=null, $group='nogroup')
     {
         if ($type==='skin_css' && empty($params)) {
             $params = 'media="all"';
