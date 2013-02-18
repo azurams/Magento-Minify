@@ -1,4 +1,4 @@
-(function() {
+document.observe("dom:loaded", function() {
 
     // Destroys the localStorage copy of CSS that less.js creates
     localStorage.clear();
@@ -19,4 +19,4 @@
         less.watch();
         less.refresh();
     }
-})();
+});
