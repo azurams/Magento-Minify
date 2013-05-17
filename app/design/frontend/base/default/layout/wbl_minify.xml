@@ -25,8 +25,13 @@
 <layout>
     <less_js>
         <reference name="head">
-            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/less.js</script><params/><group>less_js</group></action>
             <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/init.js</script><params/><group>less_js</group></action>
+            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/less.min.js</script><params/><group>less_js</group></action>
+            <block type="core/text" name="lessjs_initafter">
+                <action method="setText" ifconfig="dev/minify/lessjs"><text><![CDATA[<script type="text/javascript">
+                    less.watch();
+                </script>]]></text></action>
+            </block>
         </reference>
     </less_js>
     <default>

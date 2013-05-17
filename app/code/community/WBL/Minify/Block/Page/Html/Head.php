@@ -115,7 +115,7 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
      */
     public function addItem($type, $name, $params=null, $if=null, $cond=null, $group='nogroup')
     {
-        if ($type==='skin_css' && empty($params)) {
+        if (($type==='skin_css' || $type==='skin_less') && empty($params)) {
             $params = 'media="all"';
         }
         $this->_data['items'][$type.'/'.$name] = array(
@@ -164,6 +164,8 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                 case 'skin_js':   // skin/*/*.js
                 case 'js_css':    // js/*.css
                 case 'skin_css':  // skin/*/*.css
+                case 'js_less':   // js/*.less
+                case 'skin_less': // skin/*/*.less
                     $lines[$item['group']][$if][$item['type']][$params][$item['name']] = $item['name'];
                     break;
                 default:
@@ -189,6 +191,13 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                 $html .= $this->_prepareStaticAndSkinElements('<link rel="stylesheet" type="text/css" href="%s"%s />' . "\n",
                     empty($items['js_css']) ? array() : $items['js_css'],
                     empty($items['skin_css']) ? array() : $items['skin_css'],
+                    $shouldMergeCss ? array(Mage::getDesign(), 'getMergedCssUrl') : null
+                );
+
+                                // static and skin css
+                $html .= $this->_prepareStaticAndSkinElements('<link rel="stylesheet" type="text/less" href="%s"%s />' . "\n",
+                    empty($items['js_less']) ? array() : $items['js_less'],
+                    empty($items['skin_less']) ? array() : $items['skin_less'],
                     $shouldMergeCss ? array(Mage::getDesign(), 'getMergedCssUrl') : null
                 );
 
