@@ -194,8 +194,9 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
                     $shouldMergeCss ? array(Mage::getDesign(), 'getMergedCssUrl') : null
                 );
 
-                                // static and skin css
-                $html .= $this->_prepareStaticAndSkinElements('<link rel="stylesheet" type="text/less" href="%s"%s />' . "\n",
+                // static and skin css
+                $type = $shouldMergeCss ? 'text/css' : 'text/less';
+                $html .= $this->_prepareStaticAndSkinElements('<link rel="stylesheet" type="'.$type.'" href="%s"%s />' . "\n",
                     empty($items['js_less']) ? array() : $items['js_less'],
                     empty($items['skin_less']) ? array() : $items['skin_less'],
                     $shouldMergeCss ? array(Mage::getDesign(), 'getMergedCssUrl') : null
