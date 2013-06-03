@@ -1,22 +1,9 @@
-(function() {
-
-    // Destroys the localStorage copy of CSS that less.js creates
-    localStorage.clear();
-
-    var cssEls = document.getElementsByTagName('link');
-    var init = false;
-
-    for (var i in cssEls) {
-        if (cssEls[i].href && cssEls[i].href.substr(-5) == '.less') {
-            init = true;
-            less.dumpLineNumbers = "all";
-            less.sheets.push(cssEls[i]);
-        }
-    }
-
-    if (init)
-    {
-        less.watch();
-        less.refresh();
-    }
-})();
+less = {
+    env: "development", // or "production"
+    async: true,        // load imports async
+    poll: 2000,         // when in watch mode, time in ms between polls
+    dumpLineNumbers: "all" // or "mediaQuery" or "all"
+//    relativeUrls: false // whether to adjust url's to be relative
+//                        // if false, url's are already relative to the
+//                        // entry less file
+};

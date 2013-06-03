@@ -35,12 +35,9 @@
     </frontend>
     <default>
    		<dev>
-   			<minify>
-   				<enable_yuicompressor>0</enable_yuicompressor>
-   				<js_files>1</js_files>
-   				<css_files>1</css_files>
+   			<css>
    				<lessjs>1</lessjs>
-   			</minify>
+   			</css>
    		</dev>
    	</default>
 </config>
