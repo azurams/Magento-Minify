@@ -23,10 +23,21 @@
 -->
 
 <layout>
-    <default>
+    <less_js>
         <reference name="head">
-            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/less.js</script><params/><group>less_js</group></action>
-            <action method="addJs" ifconfig="dev/minify/lessjs"><script>less/init.js</script><params/><group>less_js</group></action>
+            <action method="addJs" ifconfig="dev/css/lessjs"><script>less/init.js</script><params/><group>less_js</group></action>
+            <action method="addJs" ifconfig="dev/css/lessjs"><script>less/less.js</script><params/><group>less_js</group></action>
+            <block type="core/text" name="lessjs_initafter">
+                <action method="setText" ifconfig="dev/css/lessjs_watch"><text><![CDATA[<script type="text/javascript">
+                    less.watch();
+                </script>]]></text></action>
+            </block>
         </reference>
+    </less_js>
+    <default>
+        <update handle="less_js"/>
     </default>
+    <print>
+        <update handle="less_js"/>
+    </print>
 </layout>

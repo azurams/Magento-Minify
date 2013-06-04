@@ -2,9 +2,7 @@
 
 class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
 {
-    const XML_PATH_MINIFY_ENABLE_YUICOMPRESSOR  = 'dev/minify/enable_yuicompressor';
-    const XML_PATH_MINIFY_CSS_FILES             = 'dev/minify/css_files';
-    const XML_PATH_MINIFY_JS_FILES              = 'dev/minify/js_files';
+    const XML_PATH_MINIFY_ENABLE_YUICOMPRESSOR  = 'dev/js/enable_yuicompressor';
 
     protected $_lessphp = null;
 
@@ -19,24 +17,6 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
 
 
     /**
-     * @return bool
-     */
-    public function canMinifyJs()
-    {
-        return Mage::getStoreConfigFlag(self::XML_PATH_MINIFY_JS_FILES);
-    }
-
-
-    /**
-     * @return bool
-     */
-    public function canMinifyCss()
-    {
-        return Mage::getStoreConfigFlag(self::XML_PATH_MINIFY_CSS_FILES);
-    }
-
-
-    /**
      * @param string $data
      * @param string $target
      *
@@ -44,62 +24,57 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
      */
     public function minifyJsCss($data,$target)
     {
-        if ($this->canMinifyCss() || $this->canMinifyJs()) {
 
-            if ($this->isYUICompressEnabled()) {
-                Minify_YUICompressor::$jarFile = Mage::getBaseDir().DS.'bin'.DS.'yuicompressor-2.4.7.jar';
-                Minify_YUICompressor::$tempDir = realpath(sys_get_temp_dir());
-            }
-
-            switch (pathinfo($target, PATHINFO_EXTENSION)) {
-                case 'js':
-                    if ($this->canMinifyJs()) {
-                        if ($this->isYUICompressEnabled()) {
-                            try {
-                                Varien_Profiler::start('Minify_YUICompressor::minifyJs');
-                                $data = Minify_YUICompressor::minifyJs($data);
-                                Varien_Profiler::stop('Minify_YUICompressor::minifyJs');
-                                $YUICompressorFailed = false;
-                            } catch(Exception $e) {
-                                Mage::logException($e);
-                                $YUICompressorFailed = true;
-                            }
-                        }
-
-                        if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
-                            Varien_Profiler::start('Minify_JSMin::minify');
-                            $data = Minify_JSMin::minify($data);
-                            Varien_Profiler::stop('Minify_JSMin::minify');
-                        }
-                    }
-                break;
-
-                case 'css':
-                    if ($this->canMinifyCss()) {
-                        if ($this->isYUICompressEnabled()) {
-                            try {
-                                Varien_Profiler::start('Minify_YUICompressor::minifyCss');
-                                $data = Minify_YUICompressor::minifyCss($data);
-                                Varien_Profiler::stop('Minify_YUICompressor::minifyCss');
-                                $YUICompressorFailed = false;
-                            } catch(Exception $e) {
-                                Mage::logException($e);
-                                $YUICompressorFailed = true;
-                            }
-                        }
-
-                        if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
-                            Varien_Profiler::start('Minify_Css_Compressor::process');
-                            $data = Minify_Css_Compressor::process($data);
-                            Varien_Profiler::stop('Minify_Css_Compressor::process');
-                        }
-                    }
-                break;
-
-                default:
-                    return false;
-            }
+        if ($this->isYUICompressEnabled()) {
+            Minify_YUICompressor::$jarFile = Mage::getBaseDir().DS.'bin'.DS.'yuicompressor-2.4.7.jar';
+            Minify_YUICompressor::$tempDir = realpath(sys_get_temp_dir());
         }
+
+        switch (pathinfo($target, PATHINFO_EXTENSION)) {
+            case 'js':
+                if ($this->isYUICompressEnabled()) {
+                    try {
+                        Varien_Profiler::start('Minify_YUICompressor::minifyJs');
+                        $data = Minify_YUICompressor::minifyJs($data);
+                        Varien_Profiler::stop('Minify_YUICompressor::minifyJs');
+                        $YUICompressorFailed = false;
+                    } catch(Exception $e) {
+                        Mage::logException($e);
+                        $YUICompressorFailed = true;
+                    }
+                }
+
+                if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                    Varien_Profiler::start('Minify_JSMin::minify');
+                    $data = Minify_JSMin::minify($data);
+                    Varien_Profiler::stop('Minify_JSMin::minify');
+                }
+            break;
+
+            case 'css':
+                if ($this->isYUICompressEnabled()) {
+                    try {
+                        Varien_Profiler::start('Minify_YUICompressor::minifyCss');
+                        $data = Minify_YUICompressor::minifyCss($data);
+                        Varien_Profiler::stop('Minify_YUICompressor::minifyCss');
+                        $YUICompressorFailed = false;
+                    } catch(Exception $e) {
+                        Mage::logException($e);
+                        $YUICompressorFailed = true;
+                    }
+                }
+
+                if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                    Varien_Profiler::start('Minify_Css_Compressor::process');
+                    $data = Minify_Css_Compressor::process($data);
+                    Varien_Profiler::stop('Minify_Css_Compressor::process');
+                }
+            break;
+
+            default:
+                return false;
+        }
+
         return $data;
     }
 
@@ -115,21 +90,18 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
      */
     public function preProcess($data, $file)
     {
-        if ($this->canMinifyCss() || $this->canMinifyJs()) {
-            switch (pathinfo($file, PATHINFO_EXTENSION))
-            {
-                case 'less':
-                    Varien_Profiler::start('lessc::compileFile');
-                    $data = $this->_getLessphpModel()->compileFile($file);
-                    Varien_Profiler::stop('lessc::compileFile');
-                    return $data;
-                break;
+        switch (pathinfo($file, PATHINFO_EXTENSION))
+        {
+            case 'less':
+                Varien_Profiler::start('lessc::compileFile');
+                $data = $this->_getLessphpModel()->compileFile($file);
+                Varien_Profiler::stop('lessc::compileFile');
+                return $data;
+            break;
 
-                default:
-                    return $data;
-            }
+            default:
+                return $data;
         }
-        return $data;
     }
 
 
