@@ -39,7 +39,7 @@ $ modman clone WBL_Minify git://github.com/azurams/Magento-Minify.git
 
 ### Download package manually:
 
-* Download latest version [here](https://github.com/azurams/Magento-Minify/downloads)
+* Download latest version [here](https://github.com/azurams/Magento-Minify/archive/master.zip)
 * Unzip in Magento root folder
 * Clean cache
 
