@@ -143,6 +143,33 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
     }
 
     /**
+     * Classify HTML head item and queue it into "lines" array
+     *
+     * @see self::getCssJsHtml()
+     * @param array &$lines
+     * @param string $itemIf
+     * @param string $itemType
+     * @param string $itemParams
+     * @param string $itemName
+     * @param array $itemThe
+     */
+    protected function _separateOtherHtmlHeadElements(&$lines, $itemIf, $itemType, $itemParams, $itemName, $itemThe)
+    {
+    	$params = $itemParams ? ' ' . $itemParams : '';
+    	$href   = $itemName;
+    	switch ($itemType) {
+    		case 'rss':
+    			$lines[$itemThe['group']][$itemIf]['other'][] = sprintf('<link href="%s"%s rel="alternate" type="application/rss+xml" />',
+    			$href, $params
+    			);
+    			break;
+    		case 'link_rel':
+    			$lines[$itemThe['group']][$itemIf]['other'][] = sprintf('<link%s href="%s" />', $params, $href);
+    			break;
+    	}
+    }
+
+    /**
      * Get HEAD HTML with CSS/JS/RSS definitions
      * (actually it also renders other elements, TODO: fix it up or rename this method)
      *
