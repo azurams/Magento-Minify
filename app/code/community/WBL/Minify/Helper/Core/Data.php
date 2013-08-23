@@ -155,6 +155,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                 } else {
                     $targetMtime = filemtime($targetFile);
                     foreach ($srcFiles as $file) {
+                        if (!is_file($file)) {
+                            throw new Exception(sprintf('File %s is not a file, probably the file doesn\'t exist.', $file));
+                        }
+
                         if (!file_exists($file) || @filemtime($file) > $targetMtime) {
                             $shouldMerge = true;
                             break;
