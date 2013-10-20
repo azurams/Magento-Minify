@@ -201,6 +201,13 @@ class WBL_Minify_Block_Page_Html_Head extends Mage_Page_Block_Html_Head
             }
         }
 
+        //move less_js always to the end.
+        if (isset($lines['less_js'])){
+            $lessJs = $lines['less_js'];
+            unset($lines['less_js']);
+            $lines['less_js'] = $lessJs;
+        }
+
         // prepare HTML
         $shouldMergeJs = Mage::getStoreConfigFlag('dev/js/merge_files');
         $shouldMergeCss = Mage::getStoreConfigFlag('dev/css/merge_css_files');
