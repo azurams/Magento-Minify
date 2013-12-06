@@ -52,6 +52,13 @@ class Minify_YUICompressor {
     public static $javaExecutable = 'java';
 
     /**
+     * Contains the shell command for yui for debugging purposes
+     *
+     * @var string
+     */
+    public static $yuiCommand = '';
+
+    /**
      * Minify a Javascript string
      *
      * @param string $js
@@ -98,9 +105,13 @@ class Minify_YUICompressor {
             throw new Exception('Minify_YUICompressor : could not create temp file.');
         }
         file_put_contents($tmpFile, $content);
-        exec(self::_getCmd($options, $type, $tmpFile), $output, $result_code);
+        self::$yuiCommand = self::_getCmd($options, $type, $tmpFile);
+
+        $result_code = 0;
+        $output = array();
+        exec(self::$yuiCommand, $output, $result_code);
         unlink($tmpFile);
-        if ($result_code != 0) {
+        if ((int)$result_code !== 0) {
             throw new Exception('Minify_YUICompressor : YUI compressor execution failed.');
         }
         return implode("\n", $output);
@@ -118,7 +129,7 @@ class Minify_YUICompressor {
         $o = array_merge(
             array(
                 'charset' => ''
-                ,'line-break' => 5000
+                ,'line-break' => 3000
                 ,'type' => $type
                 ,'nomunge' => false
                 ,'preserve-semi' => false
@@ -146,8 +157,8 @@ class Minify_YUICompressor {
 
     protected static function _prepare()
     {
-        if (! is_file(self::$jarFile)) {
-            throw new Exception('Minify_YUICompressor : $jarFile('.self::$jarFile.') is not a valid file.');
+        if (! is_link(self::$jarFile)) {
+            throw new Exception('Minify_YUICompressor : $jarFile('.self::$jarFile.') is not a valid link.');
         }
         if (! is_dir(self::$tempDir)) {
             throw new Exception('Minify_YUICompressor : $tempDir('.self::$tempDir.') is not a valid direcotry.');

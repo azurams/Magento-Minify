@@ -26,7 +26,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
     {
 
         if ($this->isYUICompressEnabled()) {
-            Minify_YUICompressor::$jarFile = Mage::getBaseDir().DS.'lib'.DS.'yuicompressor.jar';
+            Minify_YUICompressor::$jarFile = Mage::getBaseDir().DS.'lib'.DS.'yuicompressor'.DS.'yuicompressor.jar';
             Minify_YUICompressor::$tempDir = realpath(sys_get_temp_dir());
         }
 
@@ -42,6 +42,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         Mage::logException($e);
                         $YUICompressorFailed = true;
                     }
+                    Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
                 if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
@@ -62,6 +63,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         Mage::logException($e);
                         $YUICompressorFailed = true;
                     }
+                    Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
                 if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
