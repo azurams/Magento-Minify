@@ -83,7 +83,15 @@ class Minify_YUICompressor {
         return self::_minify('css', $css, $options);
     }
 
-    private static function _minify($type, $content, $options)
+    /**
+     * @param $type
+     * @param $content
+     * @param $options
+     *
+     * @return string
+     * @throws Exception
+     */
+    protected static function _minify($type, $content, $options)
     {
         self::_prepare();
         if (! ($tmpFile = tempnam(self::$tempDir, 'yuic_'))) {
@@ -98,7 +106,14 @@ class Minify_YUICompressor {
         return implode("\n", $output);
     }
 
-    private static function _getCmd($userOptions, $type, $tmpFile)
+    /**
+     * @param $userOptions
+     * @param $type
+     * @param $tmpFile
+     *
+     * @return string
+     */
+    protected static function _getCmd($userOptions, $type, $tmpFile)
     {
         $o = array_merge(
             array(
@@ -112,7 +127,7 @@ class Minify_YUICompressor {
             ,$userOptions
         );
         $cmd = self::$javaExecutable . ' -jar ' . escapeshellarg(self::$jarFile)
-             . " --type {$type}"
+             . ' --type ' . $type
              . (preg_match('/^[\\da-zA-Z0-9\\-]+$/', $o['charset'])
                 ? " --charset {$o['charset']}"
                 : '')
@@ -121,15 +136,15 @@ class Minify_YUICompressor {
                 : '');
         if ($type === 'js') {
             foreach (array('nomunge', 'preserve-semi', 'disable-optimizations') as $opt) {
-                $cmd .= $o[$opt]
-                    ? " --{$opt}"
+                $cmd .= empty($o[$opt]) === false
+                    ? ' --' . $opt
                     : '';
             }
         }
         return $cmd . ' ' . escapeshellarg($tmpFile);
     }
 
-    private static function _prepare()
+    protected static function _prepare()
     {
         if (! is_file(self::$jarFile)) {
             throw new Exception('Minify_YUICompressor : $jarFile('.self::$jarFile.') is not a valid file.');
