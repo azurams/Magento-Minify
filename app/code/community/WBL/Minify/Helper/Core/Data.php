@@ -6,7 +6,6 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
 
     protected $_lessphp = null;
 
-
     /**
      * @return bool
      */
@@ -29,7 +28,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
             Minify_YUICompressor::$jarFile = Mage::getBaseDir().DS.'lib'.DS.'yuicompressor'.DS.'yuicompressor.jar';
             Minify_YUICompressor::$tempDir = realpath(sys_get_temp_dir());
         }
-
+        $YUICompressorFailed = false;
         switch (pathinfo($target, PATHINFO_EXTENSION)) {
             case 'js':
                 if ($this->isYUICompressEnabled()) {
@@ -45,7 +44,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
-                if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                if (!$this->isYUICompressEnabled() || $YUICompressorFailed === true) {
                     Varien_Profiler::start('Minify_JSMin::minify');
                     $data = Minify_JSMin::minify($data);
                     Varien_Profiler::stop('Minify_JSMin::minify');
@@ -66,7 +65,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
-                if (!$this->isYUICompressEnabled() || $YUICompressorFailed) {
+                if (!$this->isYUICompressEnabled() || $YUICompressorFailed === true) {
                     Varien_Profiler::start('Minify_Css_Compressor::process');
                     $data = Minify_Css_Compressor::process($data);
                     Varien_Profiler::stop('Minify_Css_Compressor::process');
