@@ -38,10 +38,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         Varien_Profiler::stop('Minify_YUICompressor::minifyJs');
                         $YUICompressorFailed = false;
                     } catch(Exception $e) {
+                        Mage::log(Minify_YUICompressor::$yuiCommand);
                         Mage::logException($e);
                         $YUICompressorFailed = true;
                     }
-                    Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
                 if (!$this->isYUICompressEnabled() || $YUICompressorFailed === true) {
@@ -59,10 +59,10 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                         Varien_Profiler::stop('Minify_YUICompressor::minifyCss');
                         $YUICompressorFailed = false;
                     } catch(Exception $e) {
+                        Mage::log(Minify_YUICompressor::$yuiCommand);
                         Mage::logException($e);
                         $YUICompressorFailed = true;
                     }
-                    Mage::log(Minify_YUICompressor::$yuiCommand);
                 }
 
                 if (!$this->isYUICompressEnabled() || $YUICompressorFailed === true) {
