@@ -3,14 +3,14 @@
     "license": "OSL-3.0",
     "type": "magento-module",
     "description": "Simply enables js and css minification.",
-    "homepage": "https://github.com/fontis/fontis_securepay",
+    "homepage": "https://github.com/azurams/Magento-Minify",
     "require": {
         "magento-hackathon/magento-composer-installer": "*"
     },
     "authors": [
         {
             "name": "William Blanc Dit Jolicoeur",
-            "email": "....@......com"
+            "email": "william.blanc@gmail.com"
         }
     ]
 }
