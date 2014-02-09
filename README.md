@@ -95,3 +95,7 @@ relevant groups (the product page gets its own group for example). More examples
     </catalog_product_view>
 </layout>
 ```
+
+## License
+
+???
