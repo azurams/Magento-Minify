@@ -208,7 +208,7 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     if ($beforeMergeCallback && is_callable($beforeMergeCallback)) {
                         $contents = call_user_func($beforeMergeCallback, $file, $contents);
                     }
-                    $data .= $contents;
+                    $data .= $contents . ";\n";
                 }
                 if (!$data) {
                     // no translation intentionally
