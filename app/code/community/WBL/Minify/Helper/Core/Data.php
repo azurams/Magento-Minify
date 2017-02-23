@@ -208,7 +208,14 @@ class WBL_Minify_Helper_Core_Data extends Mage_Core_Helper_Data
                     if ($beforeMergeCallback && is_callable($beforeMergeCallback)) {
                         $contents = call_user_func($beforeMergeCallback, $file, $contents);
                     }
-                    $data .= $contents . ";\n";
+                    
+                    if ((strpos($file, '.js', strlen($file) - 3) !== false)){
+                        //only for .js files, add ; to it to prevent missing ; is some js files
+                        $data .= $contents . ";\n";
+                    }
+                    else{
+                        $data .= $contents;
+                    }
                 }
                 if (!$data) {
                     // no translation intentionally
