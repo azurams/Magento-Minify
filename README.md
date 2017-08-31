@@ -43,7 +43,15 @@ $ modman clone WBL_Minify git://github.com/azurams/Magento-Minify.git
 * Unzip in Magento root folder
 * Clean cache
 
-Log-out then Log-in in magento backend, go to System > Configuration > Developer > Minification Settings.
+Log-out then Log-in in magento backend, go to: 
+
+System > Configuration > Developer > JavaScript Settings 
+<<<<<<< HEAD
+
+=======
+>>>>>>> 1473e32... Updated README documentation. In Magento 1.9.2.2 there is no "Minification Settings".
+System > Configuration > Developer > CSS Settings 
+
 Then flush media/js and media/css files... and that's it !
 
 ## *NEW* LESS support
