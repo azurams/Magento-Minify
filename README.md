@@ -82,7 +82,7 @@ relevant groups (the product page gets its own group for example). More examples
     <default>
         <reference name="head">
             <action method="addItem"><type>skin_css</type><stylesheet>less/responsive.less</stylesheet><params/><if/><cond/><group>locale</group></action>
-            <!-- not the the <params/>, <if/> and the <cond/>, those are required. -->
+            <!-- not the <params/>, <if/> and the <cond/>, those are required. -->
         </reference>
     </default>
 
